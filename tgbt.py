@@ -1,22 +1,49 @@
+import time
+import random
+import datetime
 import telepot
-from pprint import pprint
+from telepot.loop import MessageLoop
+
+
+def handle(msg):
+    chat_id = msg['chat']['id']
+    command = msg['text']
+
+    print ('Got command: %s' % command)
+
+    if command == '/roll':
+        bot.sendMessage(chat_id, random.randint(1,6))
+    elif command == '/time':
+        bot.sendMessage(chat_id, str(datetime.datetime.now()))
 
 telepot.api.set_proxy("https://186.200.35.37:3128")
 bot = telepot.Bot('684539582:AAFYcidGBScltH_nd07xpAIwimIDJ4SndLI')
 
-pprint(bot.getMe())
-upd=0
-# print(bot.getUpdates(offset=upd))
+MessageLoop(bot, handle).run_as_thread()
+print ('I am listening ...')
 
-# offset=939343314
-while(True):
-    s=bot.getUpdates(offset=upd)
-    if len(s) > 0:
-        print(s)
-        print(s[0].get('message').get('text'))
-        upd = s[-1]['update_id'] +1
-            
-            
+while 1:
+    time.sleep(10)
+
+# import telepot
+# from pprint import pprint
+# 
+# telepot.api.set_proxy("https://186.200.35.37:3128")
+# bot = telepot.Bot('684539582:AAFYcidGBScltH_nd07xpAIwimIDJ4SndLI')
+# 
+# pprint(bot.getMe())
+# upd=0
+# # print(bot.getUpdates(offset=upd))
+# 
+# # offset=939343314
+# while(True):
+#     s=bot.getUpdates(offset=upd)
+#     if len(s) > 0:
+#         print(s)
+#         print(s[0].get('message').get('text'))
+#         upd = s[-1]['update_id'] +1
+#             
+#             
 
 
 
